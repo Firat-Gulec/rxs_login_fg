@@ -31,7 +31,11 @@ class _LoginViewState extends State<LoginView> with CacheManager {
   Future<void> _checkUserControl(String name, String password) async {
     await Future.delayed(const Duration(seconds: 1));
     if (login(name, password)) {
-      //navigate Profile
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Correct login!"),
+        ),
+      );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -50,16 +54,16 @@ class _LoginViewState extends State<LoginView> with CacheManager {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: Form(
+      body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             const Padding(padding: EdgeInsets.only(top: 200)),
             Image.asset(
               'assets/images/rixos_logo.png',
-              width: size.width * 0.50,
+              width: size.width * 0.60,
             ),
-            const Padding(padding: EdgeInsets.only(top: 20)),
+            const Padding(padding: EdgeInsets.only(top: 50)),
             //Social Login Buttons(Google and Facebook)
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
