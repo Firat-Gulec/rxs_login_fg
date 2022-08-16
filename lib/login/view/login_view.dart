@@ -56,7 +56,7 @@ class _LoginViewState extends State<LoginView> with CacheManager {
           children: <Widget>[
             const Padding(padding: EdgeInsets.only(top: 200)),
             Image.asset(
-              'assets/images/petlogo.png',
+              'assets/images/rixos_logo.png',
               width: size.width * 0.50,
             ),
             const Padding(padding: EdgeInsets.only(top: 20)),
@@ -102,62 +102,67 @@ class _LoginViewState extends State<LoginView> with CacheManager {
                 });
               },
             ),
+            Padding(padding: CustomPadding()),
             Visibility(
               visible: hideLogin,
-              child: Column(
-                children: [
-                  NormalInputField(
-                      data: Theme.of(context),
-                      controller: usernameInput,
-                      onChanged: (text) {},
-                      title: "Username"),
-                  Padding(padding: CustomPadding()),
-                  PasswordInputField(
-                      controller: passwordInput,
-                      title: "Password",
-                      suffixIcon: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            hidePassword = !hidePassword;
-                          });
-                        },
-                        child: Icon(
-                          hidePassword == true
-                              ? Icons.visibility
-                              : Icons.visibility_off,
-                          size: 18,
+              child: SizedBox(
+                width: size.width * 0.6,
+                child: Column(
+                  mainAxisAlignment:  MainAxisAlignment.center,
+                  children: [
+                    NormalInputField(
+                        data: Theme.of(context),
+                        controller: usernameInput,
+                        onChanged: (text) {},
+                        title: "Username"),
+                    Padding(padding: CustomPadding()),
+                    PasswordInputField(
+                        controller: passwordInput,
+                        title: "Password",
+                        suffixIcon: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              hidePassword = !hidePassword;
+                            });
+                          },
+                          child: Icon(
+                            hidePassword == true
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            size: 18,
+                          ),
                         ),
-                      ),
-                      data: Theme.of(context),
-                      obscureText: hidePassword),
-                  Padding(padding: CustomPadding()),
-                  CircularButton(
-                    title: "Sign in",
-                    onPressed: () async {
-                      setState(() {
-                        _checkUserControl(
-                            usernameInput.text, passwordInput.text);
-                        LoginService()
-                            .loginUser(usernameInput.text, passwordInput.text);
-                      });
-                    },
-                  ),
-                  Padding(padding: CustomPadding()),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Padding(padding: EdgeInsets.all(5)),
-                      GestureDetector(
-                        child: Text("Forgotten password",
-                            style:
-                                const TextStyle(fontWeight: FontWeight.bold)),
-                        onTap: () {
-                          const UserSelectSheet().show(context);
-                        },
-                      )
-                    ],
-                  ),
-                ],
+                        data: Theme.of(context),
+                        obscureText: hidePassword),
+                    Padding(padding: CustomPadding()),
+                    CircularButton(
+                      title: "Sign in",
+                      onPressed: () async {
+                        setState(() {
+                          _checkUserControl(
+                              usernameInput.text, passwordInput.text);
+                          LoginService()
+                              .loginUser(usernameInput.text, passwordInput.text);
+                        });
+                      },
+                    ),
+                    Padding(padding: CustomPadding()),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Padding(padding: EdgeInsets.all(5)),
+                        GestureDetector(
+                          child: Text("Forgotten password",
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold)),
+                          onTap: () {
+                            const UserSelectSheet().show(context);
+                          },
+                        )
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
             const Padding(padding: EdgeInsets.only(bottom: 100)),
