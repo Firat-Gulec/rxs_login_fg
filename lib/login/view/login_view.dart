@@ -24,7 +24,8 @@ class LoginView extends StatefulWidget {
   State<LoginView> createState() => _LoginViewState();
 }
 
-class _LoginViewState extends State<LoginView> with CacheManager {
+class _LoginViewState extends State<LoginView>
+    with CacheManager, SingleTickerProviderStateMixin {
   final ISocialLogin _facebookLogin = FacebookLogin();
   final ISocialLogin _googleLogin = GoogleLogin();
   // final ISocialLogin _twitterLogin = TwitterLogin();
@@ -51,6 +52,28 @@ class _LoginViewState extends State<LoginView> with CacheManager {
   bool hidePassword = true;
   bool hideLogin = false;
 
+//Animation Controller ...
+  late AnimationController animationController;
+  late Animation<double> animation;
+  late Animation<double> sizeAnimation;
+  int currentState = 0;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    animationController =
+        AnimationController(duration: Duration(milliseconds: 500), vsync: this);
+    animation = Tween<double>(begin: 0, end: 60).animate(animationController)
+      ..addListener(() {
+        setState(() {});
+      });
+    sizeAnimation = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
+        parent: animationController, curve: Curves.elasticInOut))
+      ..addListener(() {
+        setState(() {});
+      });
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -68,7 +91,7 @@ class _LoginViewState extends State<LoginView> with CacheManager {
             //Social Login Buttons(Google and Facebook)
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: <Widget>[
                 SocialIcon(
                     //  text: '',
                     iconSrc: 'assets/images/facebook.png',
@@ -100,81 +123,88 @@ class _LoginViewState extends State<LoginView> with CacheManager {
             ),
             //Input Login
             GestureDetector(
-              child: const OrDivider(),
+              child: OrDivider(
+                customColor: Colors.brown,
+              ),
               onTap: () {
                 setState(() {
                   hideLogin = !hideLogin;
+                  if (hideLogin == false) {
+                    animationController.reverse();
+                  } else {
+                    animationController.forward();
+                  }
                 });
               },
             ),
             Padding(padding: CustomPadding()),
-            Visibility(
-              visible: hideLogin,
-              child: SizedBox(
-                width: size.width * 0.6,
-                child: Column(
-                  mainAxisAlignment:  MainAxisAlignment.center,
-                  children: [
-                   
-                    NormalInputField(
-                        data: Theme.of(context),
-                        controller: usernameInput,
-                        onChanged: (text) {},
-                        title: "Sicil Numarası veya Kullanıcı Adı"),
-                    Padding(padding: CustomPadding()),
-                    PasswordInputField(
-                        controller: passwordInput,
-                        title: "Şifre",
-                        suffixIcon: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              hidePassword = !hidePassword;
-                            });
-                          },
-                          child: Icon(
-                            hidePassword == true
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                            size: 18,
+
+            Positioned(
+              bottom: 0,
+              child: Transform.scale(
+                scale: sizeAnimation.value,
+                child: SizedBox(
+                  width: size.width * 0.6,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      NormalInputField(
+                          data: Theme.of(context),
+                          controller: usernameInput,
+                          onChanged: (text) {},
+                          title: "Sicil Numarası veya Kullanıcı Adı"),
+                      Padding(padding: CustomPadding()),
+                      PasswordInputField(
+                          controller: passwordInput,
+                          title: "Şifre",
+                          suffixIcon: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                hidePassword = !hidePassword;
+                              });
+                            },
+                            child: Icon(
+                              hidePassword == true
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              size: 18,
+                            ),
                           ),
+                          data: Theme.of(context),
+                          obscureText: hidePassword),
+                      const Padding(padding: EdgeInsets.all(5)),
+                      GestureDetector(
+                        child: Container(
+                          width: size.width * 0.6,
+                          child: Text("Şifremi Unuttum",
+                              textAlign: TextAlign.right,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.brown)),
                         ),
-                        data: Theme.of(context),
-                        obscureText: hidePassword),
-                   
-                    const Padding(padding: EdgeInsets.all(5)),
-                        GestureDetector(
-                          
-                          child: Container(
-                            width: size.width*0.6,
-                            child: Text("Forgotten password",
-                            textAlign: TextAlign.right,
-                                style:
-                                    const TextStyle(fontWeight: FontWeight.bold,color: Colors.brown)),
-                          ),
-                          onTap: () {
-                            const UserSelectSheet().show(context);
-                          },
-                        ), 
-                        Padding(padding: CustomPadding()),
-                    CircularButton(
-                      title: "Sign in",
-                      onPressed: () async {
-                        setState(() {
-                          _checkUserControl(
-                              usernameInput.text, passwordInput.text);
-                          LoginService()
-                              .loginUser(usernameInput.text, passwordInput.text);
-                        });
-                      },
-                    ),
-                    Padding(padding: CustomPadding()),
-                   
-                        
-                    
-                  ],
+                        onTap: () {
+                          const UserSelectSheet().show(context);
+                        },
+                      ),
+                      Padding(padding: CustomPadding()),
+                      CircularButton(
+                        title: "Sign in",
+                        onPressed: () async {
+                          setState(() {
+                            _checkUserControl(
+                                usernameInput.text, passwordInput.text);
+                            LoginService().loginUser(
+                                usernameInput.text, passwordInput.text);
+                          });
+                        },
+                      ),
+                      Padding(padding: CustomPadding()),
+                    ],
+                  ),
                 ),
               ),
             ),
+
             const Padding(padding: EdgeInsets.only(bottom: 100)),
 
             //Don't have an Account? Singup

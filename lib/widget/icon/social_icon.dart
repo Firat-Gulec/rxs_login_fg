@@ -38,7 +38,7 @@ class _SocialIconState extends State<SocialIcon> {
         margin: const EdgeInsets.symmetric(horizontal: 5),
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          border: Border.all(width: 2, color: Colors.black),
+          border: Border.all(width: 2, color: Colors.brown),
           borderRadius: BorderRadius.circular(20),
           //shape: BoxShape.circle,
         ),

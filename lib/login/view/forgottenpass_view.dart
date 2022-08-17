@@ -12,7 +12,7 @@ class ForgottenColumn extends StatefulWidget {
 }
 
 class _ForgottenColumnState extends State<ForgottenColumn> {
-  final String _title = "Send Password";
+  final String _title = "Şifre Gönder";
   TextEditingController emailInput = TextEditingController();
 
   @override
@@ -25,7 +25,7 @@ class _ForgottenColumnState extends State<ForgottenColumn> {
         const Divider(indent: 150, endIndent: 150),
         const Padding(padding: EdgeInsets.all(10)),
         Image.asset(
-          'assets/logos/petlogo.png',
+          'assets/images/rixos_logo.png',
           width: size.width * 0.50,
         ),
         const Padding(padding: EdgeInsets.all(10)),
