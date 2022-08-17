@@ -38,8 +38,8 @@ class _CircularButtonState extends State<CircularButton> {
 
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
-          fixedSize: Size(size.width * 0.9, 50),
-          primary: Colors.green,
+          fixedSize: Size(size.width * 0.3, 50),
+          primary: Color.fromRGBO(100,81,61,100),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30), // <-- Radius
           ),

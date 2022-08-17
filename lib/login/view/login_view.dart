@@ -10,6 +10,7 @@ import 'package:rxs_login_fg/login/service/login_service.dart';
 
 import 'package:rxs_login_fg/widget/icon/circular_button.dart';
 import 'package:rxs_login_fg/widget/icon/social_icon.dart';
+import 'package:rxs_login_fg/widget/input/input_field.dart';
 import 'package:rxs_login_fg/widget/input/normal_input_field.dart';
 import 'package:rxs_login_fg/widget/input/password_input_field.dart';
 import 'package:rxs_login_fg/widget/padding/custom_padding.dart';
@@ -114,15 +115,16 @@ class _LoginViewState extends State<LoginView> with CacheManager {
                 child: Column(
                   mainAxisAlignment:  MainAxisAlignment.center,
                   children: [
+                   
                     NormalInputField(
                         data: Theme.of(context),
                         controller: usernameInput,
                         onChanged: (text) {},
-                        title: "Username"),
+                        title: "Sicil Numarası veya Kullanıcı Adı"),
                     Padding(padding: CustomPadding()),
                     PasswordInputField(
                         controller: passwordInput,
-                        title: "Password",
+                        title: "Şifre",
                         suffixIcon: GestureDetector(
                           onTap: () {
                             setState(() {
@@ -138,7 +140,22 @@ class _LoginViewState extends State<LoginView> with CacheManager {
                         ),
                         data: Theme.of(context),
                         obscureText: hidePassword),
-                    Padding(padding: CustomPadding()),
+                   
+                    const Padding(padding: EdgeInsets.all(5)),
+                        GestureDetector(
+                          
+                          child: Container(
+                            width: size.width*0.6,
+                            child: Text("Forgotten password",
+                            textAlign: TextAlign.right,
+                                style:
+                                    const TextStyle(fontWeight: FontWeight.bold,color: Colors.brown)),
+                          ),
+                          onTap: () {
+                            const UserSelectSheet().show(context);
+                          },
+                        ), 
+                        Padding(padding: CustomPadding()),
                     CircularButton(
                       title: "Sign in",
                       onPressed: () async {
@@ -151,20 +168,9 @@ class _LoginViewState extends State<LoginView> with CacheManager {
                       },
                     ),
                     Padding(padding: CustomPadding()),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Padding(padding: EdgeInsets.all(5)),
-                        GestureDetector(
-                          child: Text("Forgotten password",
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold)),
-                          onTap: () {
-                            const UserSelectSheet().show(context);
-                          },
-                        )
-                      ],
-                    ),
+                   
+                        
+                    
                   ],
                 ),
               ),

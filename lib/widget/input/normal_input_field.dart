@@ -9,11 +9,20 @@ class NormalInputField extends TextFormField {
       required onChanged})
       : super(
           key: key,
+          cursorColor: Colors.white,
           decoration: InputDecoration(
               hoverColor: Colors.white,
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
-              fillColor: data.colorScheme.background,
+              focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.grey),
+                borderRadius: BorderRadius.circular(5),
+              ),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  borderSide: BorderSide(
+                    color: Colors.white,
+                  )),
+              fillColor: Colors.white,
+              labelStyle: TextStyle(color: Colors.brown),
               filled: true,
               labelText: '$title'),
           controller: controller,

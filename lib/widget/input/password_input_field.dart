@@ -13,13 +13,21 @@ class PasswordInputField extends TextField {
           key: key,
           controller: controller,
           decoration: InputDecoration(
-            labelText: '$title',
-            hoverColor: Colors.white,
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
-            fillColor: ThemeData.dark().backgroundColor,
-            filled: true,
-            suffixIcon: suffixIcon,
-          ),
+              hoverColor: Colors.white,
+              focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.grey),
+                borderRadius: BorderRadius.circular(5),
+              ),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  borderSide: BorderSide(
+                    color: Colors.white,
+                  )),
+              suffixIcon: suffixIcon,
+              fillColor: Colors.white,
+              labelStyle: TextStyle(color: Colors.brown),
+              filled: true,
+              labelText: '$title'),
           obscureText: obscureText,
         );
 }
