@@ -188,7 +188,7 @@ class _LoginViewState extends State<LoginView>
                       ),
                       Padding(padding: CustomPadding()),
                       CircularButton(
-                        title: "Sign in",
+                        title: "Oturum Aç",
                         onPressed: () async {
                           setState(() {
                             _checkUserControl(
@@ -199,33 +199,26 @@ class _LoginViewState extends State<LoginView>
                         },
                       ),
                       Padding(padding: CustomPadding()),
+                       //Don't have an Account? Singup
+             Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Don't have an Account?"),
+                      const Padding(padding: EdgeInsets.all(5)),
+                      GestureDetector(
+                        child: Text("Sign up",
+                            style: const TextStyle(fontWeight: FontWeight.bold)),
+                        onTap: () {
+                          print("test");
+                        },
+                      )
+                    ],
+                  ),
                     ],
                   ),
                 ),
               ),
             ),
-
-            const Padding(padding: EdgeInsets.only(bottom: 100)),
-
-            //Don't have an Account? Singup
-            /*  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(LocaleKeys.login_dontAccount.tr()),
-                      const Padding(padding: EdgeInsets.all(5)),
-                      GestureDetector(
-                        child: Text(LocaleKeys.login_signup.tr(),
-                            style: const TextStyle(fontWeight: FontWeight.bold)),
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context) {
-                              return const RegisterForm();
-                            },
-                          ));
-                        },
-                      )
-                    ],
-                  ),*/
           ],
         ),
       ),
