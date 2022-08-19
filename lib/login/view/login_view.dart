@@ -30,18 +30,30 @@ class _LoginViewState extends State<LoginView>
   final ISocialLogin _googleLogin = GoogleLogin();
   // final ISocialLogin _twitterLogin = TwitterLogin();
 
+  Future<void> _checknamepassControl(String password) async {
+    await Future.delayed(const Duration(seconds: 1));
+    if (password == "") {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Kullanıcı adı veya Şifre boş geçilemez!"),
+        ),
+      );
+    }
+  }
+
   Future<void> _checkUserControl(String name, String password) async {
     await Future.delayed(const Duration(seconds: 1));
     if (login(name, password)) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text("Correct login!"),
+          content: Text("Giriş Başarılı!"),
+          
         ),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text("Incorrect login!"),
+          content: Text("Kullanıcı adı veya şifre yanlış. Lütfen tekrar deneyiniz!"),
         ),
       );
     }
@@ -191,29 +203,34 @@ class _LoginViewState extends State<LoginView>
                         title: "Oturum Aç",
                         onPressed: () async {
                           setState(() {
-                            _checkUserControl(
-                                usernameInput.text, passwordInput.text);
-                            LoginService().loginUser(
-                                usernameInput.text, passwordInput.text);
+                            if (passwordInput.text == "") {
+                              _checknamepassControl(passwordInput.text);
+                            } else {
+                              _checkUserControl(
+                                  usernameInput.text, passwordInput.text);
+                              LoginService().loginUser(
+                                  usernameInput.text, passwordInput.text);
+                            }
                           });
                         },
                       ),
                       Padding(padding: CustomPadding()),
-                       //Don't have an Account? Singup
-             Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Don't have an Account?"),
-                      const Padding(padding: EdgeInsets.all(5)),
-                      GestureDetector(
-                        child: Text("Sign up",
-                            style: const TextStyle(fontWeight: FontWeight.bold)),
-                        onTap: () {
-                          print("test");
-                        },
-                      )
-                    ],
-                  ),
+                      //Don't have an Account? Singup
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Hesabın yok mu?"),
+                          const Padding(padding: EdgeInsets.all(5)),
+                          GestureDetector(
+                            child: Text("Kaydol",
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold)),
+                            onTap: () {
+                              print("test");
+                            },
+                          )
+                        ],
+                      ),
                     ],
                   ),
                 ),
